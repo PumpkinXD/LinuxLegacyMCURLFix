@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "compatibilityLevel": "JAVA_8",
+  "package": "io.github.pumpkinxd.linuxlegacymcurlfix.mixins",
+  "refmap": "mixins.linuxlegacymcurlfix.refmap.json",
+  "verbose": true,
+  "client": [
+    "bugfixes.mixinGuiScreen_openURLFix",
+    "bugfixes.mixinGuiScreenResourcePacks_openFolderFix"
+  ]
+}

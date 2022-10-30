@@ -1,16 +1,16 @@
 [
   {
-    "modid": "examplemod",
-    "name": "ExampleMod",
-    "description": "example",
+    "modid": "linuxlegacymcurlfix",
+    "name": "LinuxLegacyMCURLFix",
+    "description": "uses xdg-open to open web links/resourcepack folder on linux/freebsd platform",
     "version": "${version}",
     "mcversion": "${mcversion}",
-    "url": "",
+    "url": "https://github.com/PumpkinXD/LinuxLegacyMCURLFix",
     "updateUrl": "",
     "authorList": [
-      "sdxqw"
+      "pumpkinxd"
     ],
-    "credits": "Forge,FML,sdxqw",
+    "credits": "Forge,FML,sdxqw,ItzGreenCat",
     "logoFile": "",
     "screenshots": [],
     "dependencies": []

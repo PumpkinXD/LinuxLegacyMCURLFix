@@ -18,20 +18,20 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'com.github.johnrengelman.shadow'
 
-String modid = "examplemod"
-String tweaker = "io.github.sdxqw.ifmltweaker.FMLTweaker"
+String modid = "linuxlegacymcurlfix"
+String tweaker = "io.github.pumpkinxd.linuxlegacymcurlfix.tweaker.FMLTweaker"
 
 compileJava {
     sourceCompatibility = targetCompatibility = 8
 }
 
-version "1.8.9"
-group "io.github.sdxqw"
+version= "0.1.114514"
+group= "io.github.pumpkinxd.linuxlegacymcurlfix"
 
 minecraft {
     version = "1.8.9-11.15.1.2318-1.8.9"
     runDir = 'run'
-    mappings = "stable_22"
+    mappings = "stable_20" //can't set up workspace with stable_22 so...
     def args = [
             "-Dfml.coreMods.load=${tweaker}",
             '-Dmixin.hotSwap=true',
