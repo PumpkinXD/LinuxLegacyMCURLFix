@@ -61,7 +61,7 @@ repositories {
 
 dependencies {
     sdxqw('com.github.TheNullicorn:Nedit:2.1.0')
-
+    annotationProcessor('org.spongepowered:mixin:0.7.11-SNAPSHOT')
     sdxqw('org.spongepowered:mixin:0.7.11-SNAPSHOT') {
         exclude module: 'gson'
         exclude module: 'commons-io'
@@ -88,6 +88,7 @@ shadowJar {
 }
 
 jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE;
     manifest.attributes(
             'FMLCorePluginContainsFMLMod': true,
             'ForceLoadAsMod': true,
