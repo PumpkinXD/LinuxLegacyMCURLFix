@@ -25,9 +25,8 @@ public class mixinGuiScreenResourcePacks_openFolderFix {
         method = "actionPerformed",
         at=@At(
                 value = "INVOKE",
-                //target = "Ljava/io/File;getAbsolutePath(V;)Ljava/lang/String",
-                target = "getResourcePackRepository",
-                //target = "Lnet/minecraft/client/Minecraft;getResourcePackRepository(V;)Lnet/minecraft/client/resources/ResourcePackRepository",
+                target = "getAbsolutePath",
+                ordinal = 0,
                 remap = false
         ),
         cancellable = true
@@ -37,63 +36,62 @@ public void fixOpenResFolder(CallbackInfo ci){
         String repopath= repository.getDirResourcepacks().getAbsolutePath();
         final Logger logger = LogManager.getLogger();
         boolean flag = false;
+        if (SystemUtils.IS_OS_UNIX) {
+                if (!SystemUtils.IS_OS_MAC) {
+                        try
+                        {
+                                logger.info(repopath);
+                                Runtime.getRuntime().exec(new String[] {"/usr/bin/xdg-open", repopath});
+                                ci.cancel();
+                        }
+                        catch (IOException ioexception1)
+                        {
+                                logger.error((String)"Couldn\'t open file via xdg-open", (Throwable)ioexception1);
+                                flag = true;
+                        }
+                } else {
+                        try
+                        {
+                                logger.info(repopath);
+                                Runtime.getRuntime().exec(new String[] {"/usr/bin/open", repopath});
+                                ci.cancel();
+                        }
+                        catch (IOException ioexception1)
+                        {
+                                logger.error((String)"Couldn\'t open file", (Throwable)ioexception1);
+                                flag = true;
+                        }
+                }
+                
+        } else {
+                if (SystemUtils.IS_OS_WINDOWS) {
+                        String s1 = String.format("cmd.exe /C start \"Open file\" \"%s\"", new Object[] {repopath});
 
-        if (Util.getOSType() == Util.EnumOS.OSX)
-        {
-                try
-                {
-                        logger.info(repopath);
-                        Runtime.getRuntime().exec(new String[] {"/usr/bin/open", repopath});
-                        ci.cancel();
+                        try
+                        {
+                                Runtime.getRuntime().exec(s1);
+                                ci.cancel();
+                        }
+                        catch (IOException ioexception)
+                        {
+                                logger.error((String)"Couldn\'t open file", (Throwable)ioexception);
+                                flag = true;
+                        }
+                } else {
+                        try
+                        {
+                                Class<?> oclass = Class.forName("java.awt.Desktop");
+                                Object object = oclass.getMethod("getDesktop", new Class[0]).invoke((Object)null, new Object[0]);
+                                oclass.getMethod("browse", new Class[] {URI.class}).invoke(object, new Object[] {repository.getDirResourcepacks().toURI()});
+                        }
+                        catch (Throwable throwable)
+                        {
+                                logger.error("Couldn\'t open link", throwable);
+                                flag = true;
+                        }
                 }
-                catch (IOException ioexception1)
-                {
-                        logger.error((String)"Couldn\'t open file", (Throwable)ioexception1);
-                }
+                
         }
-        else if (Util.getOSType()== Util.EnumOS.LINUX||(SystemUtils.IS_OS_UNIX&&(!SystemUtils.IS_OS_MAC)))
-        {
-                try
-                {
-                        logger.info(repopath);
-                        Runtime.getRuntime().exec(new String[] {"/usr/bin/xdg-open", repopath});
-                        ci.cancel();
-                }
-                catch (IOException ioexception1)
-                {
-                        logger.error((String)"Couldn\'t open file via xdg-open", (Throwable)ioexception1);
-                }
-        }
-        else if (Util.getOSType() == Util.EnumOS.WINDOWS)
-        {
-                String s1 = String.format("cmd.exe /C start \"Open file\" \"%s\"", new Object[] {repopath});
-
-                try
-                {
-                        Runtime.getRuntime().exec(s1);
-                        ci.cancel();
-                }
-                catch (IOException ioexception)
-                {
-                        logger.error((String)"Couldn\'t open file", (Throwable)ioexception);
-                }
-        }
-        else
-        {
-                try
-                {
-                        Class<?> oclass = Class.forName("java.awt.Desktop");
-                        Object object = oclass.getMethod("getDesktop", new Class[0]).invoke((Object)null, new Object[0]);
-                        oclass.getMethod("browse", new Class[] {URI.class}).invoke(object, new Object[] {repository.getDirResourcepacks().toURI()});
-                }
-                catch (Throwable throwable)
-                {
-                        logger.error("Couldn\'t open link", throwable);
-                        flag = true;
-                }
-        }
-
-
         if (flag)
         {
                 logger.info("Opening via system class!");
