@@ -41,7 +41,8 @@ public void fixOpenResFolder(CallbackInfo ci){
                         try
                         {
                                 logger.info(repopath);
-                                Runtime.getRuntime().exec(new String[] {"/usr/bin/xdg-open", repopath});
+                                Runtime.getRuntime().exec(new String[] {"xdg-open", repopath});//requires xdg-util or won't working
+                                //Runtime.getRuntime().exec(new String[] {"/usr/bin/xdg-open", repopath});//not working under freebsd
                                 ci.cancel();
                         }
                         catch (IOException ioexception1)
@@ -86,7 +87,7 @@ public void fixOpenResFolder(CallbackInfo ci){
                         }
                         catch (Throwable throwable)
                         {
-                                logger.error("Couldn\'t open link", throwable);
+                                logger.error("Couldn\'t open file via java.awt.Desktop", throwable);
                                 flag = true;
                         }
                 }

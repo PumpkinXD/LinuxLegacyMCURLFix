@@ -16,13 +16,15 @@ public class mixinGuiScreen_openURLFix {
 
 @Inject(method="openWebLink",at=@At(value="HEAD"),cancellable = true)
 public void FixopenWebLink(URI url,CallbackInfo ci){
+    boolean flag=false;
     try{
-            Class<?> oclass_java_awt_Desktop = Class.forName("java.awt.Desktop");
-            Object oinstance_java_awt_Desktop=oclass_java_awt_Desktop.getMethod("getDesktop", new Class[0]).invoke((Object)null, new Object[0]);
+            //Class<?> oclass_java_awt_Desktop = Class.forName("java.awt.Desktop");
+            //Object oinstance_java_awt_Desktop=oclass_java_awt_Desktop.getMethod("getDesktop", new Class[0]).invoke((Object)null, new Object[0]);
         if(SystemUtils.IS_OS_UNIX&&(!SystemUtils.IS_OS_MAC)){
-            int status_code=Runtime.getRuntime().exec("xdg-open "+url.toString()).waitFor();
+            //int status_code=Runtime.getRuntime().exec("xdg-open "+url.toString()).waitFor();
+            int status_code=Runtime.getRuntime().exec(new String[]{"xdg-open",url.toString()}).waitFor();
             if(status_code!=0)
-                throw new RuntimeException("Failed to open URL \""+url.toString()+"\"via xdg-open with code"+status_code+"!");//for linux or any *nix has xdg-open
+                throw new RuntimeException("Failed to open URL \""+url.toString()+"\"via xdg-open with code"+status_code+"!");
         }
         else
         {
@@ -35,8 +37,13 @@ public void FixopenWebLink(URI url,CallbackInfo ci){
     {
             final Logger mixinLOGGER = LogManager.getLogger();
             mixinLOGGER.error("Couldn\'t open link", throwable);
+            flag=true;
     }
-
+    if (flag)
+    {
+        LogManager.getLogger().info("Opening via system class!");
+        org.lwjgl.Sys.openURL("file://" + url.toString());
+    }
     ci.cancel();
 }
 }
