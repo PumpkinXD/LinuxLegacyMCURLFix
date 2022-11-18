@@ -25,7 +25,7 @@ compileJava {
     sourceCompatibility = targetCompatibility = 8
 }
 
-version= "0.1.1145141919810"
+version= "0.2.0"
 group= "io.github.pumpkinxd.linuxlegacymcurlfix"
 
 minecraft {

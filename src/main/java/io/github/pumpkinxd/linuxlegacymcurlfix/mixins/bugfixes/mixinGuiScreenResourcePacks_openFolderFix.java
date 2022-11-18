@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreenResourcePacks;
 import net.minecraft.client.resources.ResourcePackRepository;
 import net.minecraft.util.Util;
+import net.minecraftforge.fml.common.Loader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.Sys;
@@ -66,8 +67,14 @@ public void fixOpenResFolder(CallbackInfo ci){
                 
         } else {
                 if (SystemUtils.IS_OS_WINDOWS) {
-                        String s1 = String.format("cmd.exe /C start \"Open file\" \"%s\"", new Object[] {repopath});
-
+                        String s1;
+                        if(Loader.isModLoaded("essential")&&repopath.charAt(0)=='\\')
+                        {
+                                s1 = String.format("cmd.exe /C start \"Open file\" \"%s\"", new Object[] {repopath.substring(1)});
+                        }
+                        else {
+                                s1 = String.format("cmd.exe /C start \"Open file\" \"%s\"", new Object[]{repopath});
+                        }
                         try
                         {
                                 Runtime.getRuntime().exec(s1);
