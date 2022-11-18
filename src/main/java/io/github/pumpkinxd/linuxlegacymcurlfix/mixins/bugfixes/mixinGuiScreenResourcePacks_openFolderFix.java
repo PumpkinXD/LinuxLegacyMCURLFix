@@ -43,7 +43,6 @@ public void fixOpenResFolder(CallbackInfo ci){
                         {
                                 logger.info(repopath);
                                 Runtime.getRuntime().exec(new String[] {"xdg-open", repopath});//requires xdg-util or won't working
-                                //Runtime.getRuntime().exec(new String[] {"/usr/bin/xdg-open", repopath});//not working under freebsd
                                 ci.cancel();
                         }
                         catch (IOException ioexception1)
@@ -67,17 +66,9 @@ public void fixOpenResFolder(CallbackInfo ci){
                 
         } else {
                 if (SystemUtils.IS_OS_WINDOWS) {
-                        String s1;
-                        if(Loader.isModLoaded("essential")&&repopath.charAt(0)=='\\')
-                        {
-                                s1 = String.format("cmd.exe /C start \"Open file\" \"%s\"", new Object[] {repopath.substring(1)});
-                        }
-                        else {
-                                s1 = String.format("cmd.exe /C start \"Open file\" \"%s\"", new Object[]{repopath});
-                        }
                         try
                         {
-                                Runtime.getRuntime().exec(s1);
+                                Runtime.getRuntime().exec(new String[]{"cmd","/C","start","\"Open file\"",repopath});//I guess this time the problem is fixed, **** essential
                                 ci.cancel();
                         }
                         catch (IOException ioexception)
