@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public class LinuxLegacyMCURLFix {
 
     public static final String MOD_ID = "linuxlegacymcurlfix";
-    public static final String VERSION = "0.2.1";
+    public static final String VERSION = "0.2.2-alpha-0.1";
 
     @Mod.EventHandler
     public void init(FMLPreInitializationEvent event) {

@@ -19,7 +19,7 @@ import java.nio.file.Path;
 
 import org.apache.commons.lang3.SystemUtils;
 
-
+@SuppressWarnings("unused")
 @Mixin(GuiScreenResourcePacks.class)
 public class mixinGuiScreenResourcePacks_openFolderFix {
 @Inject(

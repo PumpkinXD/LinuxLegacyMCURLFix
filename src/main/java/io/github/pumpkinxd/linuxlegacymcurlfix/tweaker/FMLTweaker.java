@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.Mixins;
 
 import java.util.Map;
 
+@SuppressWarnings("unused")
 @IFMLLoadingPlugin.MCVersion(value = "1.8.9")
 public class FMLTweaker implements IFMLLoadingPlugin {
 

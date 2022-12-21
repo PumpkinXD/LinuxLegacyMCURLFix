@@ -6,6 +6,7 @@
   "verbose": true,
   "client": [
     "bugfixes.mixinGuiScreen_openURLFix",
-    "bugfixes.mixinGuiScreenResourcePacks_openFolderFix"
+    "bugfixes.mixinGuiScreenResourcePacks_openFolderFix",
+    "bugfixes.optifine.mixinGuiShaders_openURLFix"
   ]
 }

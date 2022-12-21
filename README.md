@@ -10,7 +10,7 @@ Now supports 1.8.9(gonna port to 1.12.2 later I guess, XD)
 
 </a>
 
-ItzGreenCat for answering my questions(including sliiy questions) about mixins.
+ItzGreenCat for answering my questions(including silly questions) about mixins.
 
 sdxqw and their friends for providing and maintaining a [sweet forge mod template with mixins](https://github.com/AxstSoftware/ForgeMixins).
 

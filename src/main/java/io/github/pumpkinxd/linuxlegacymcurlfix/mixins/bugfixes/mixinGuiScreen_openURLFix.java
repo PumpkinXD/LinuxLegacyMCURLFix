@@ -11,6 +11,7 @@ import java.net.URI;
 
 import org.apache.commons.lang3.SystemUtils;
 
+@SuppressWarnings("unused")
 @Mixin(GuiScreen.class)
 public class mixinGuiScreen_openURLFix {
 
@@ -42,7 +43,7 @@ public void FixopenWebLink(URI url,CallbackInfo ci){
     if (flag)
     {
         LogManager.getLogger().info("Opening via system class!");
-        org.lwjgl.Sys.openURL("file://" + url.toString());
+        org.lwjgl.Sys.openURL("HTTPS://" + url.toString());
     }
     ci.cancel();
 }
